@@ -1,0 +1,27 @@
+--Exercise 2 - Dormant Costomers
+--Get customers who have not ordered anyting for the month of Jan 2014
+--Tables : orders and customers
+--output columns: all columns from customers as is
+--data should be sorted by customer_id
+--make sure to run below validated queries and validate output
+
+SELECT *
+FROM orders;
+
+SELECT * 
+FROM customers;
+
+SELECT c.*
+FROM customers AS c 
+	LEFT OUTER JOIN orders AS o
+		ON (c.customer_id = o.order_customer_id) and (to_char(o.order_date::timestamp, 'yyyy-MM') ='2014-01')
+WHERE o.order_customer_id IS NULL
+ORDER BY customer_id
+
+SELECT DISTINCT c.customer_id,
+	o.order_date
+FROM customers AS c 
+	JOIN orders AS o
+		ON (c.customer_id = o.order_customer_id)
+WHERE to_char(o.order_date::timestamp, 'yyyy-MM') ='2014-01'
+ORDER BY customer_id
